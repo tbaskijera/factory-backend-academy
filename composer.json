@@ -1,1 +1,15 @@
-{}
+{
+    "name": "toni/factory-backend-academy",
+    "autoload": {
+        "psr-4": {
+            "Toni\\FactoryBackendAcademy\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Toni Baskijera",
+            "email": "tonibaskijera@gmail.com"
+        }
+    ],
+    "require": {}
+}
