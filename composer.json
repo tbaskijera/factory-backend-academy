@@ -2,7 +2,7 @@
     "name": "toni/factory-backend-academy",
     "autoload": {
         "psr-4": {
-            "Toni\\FactoryBackendAcademy\\": "src/"
+            "App\\": "src/"
         }
     },
     "authors": [
