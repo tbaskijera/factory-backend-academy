@@ -13,20 +13,13 @@ interface RequestInterface
 
 class Request implements RequestInterface
 {
-    private string $method;
-    private string $path;
-    private array $headers;
-    private ?string $body;
-    private array $params;
-
-    public function __construct(string $method, string $path, array $headers = [], string $body = null, array $params = [])
-    {
-        $this->method = $method;
-        $this->path = $path;
-        $this->headers = $headers;
-        $this->body = $body;
-        $this->params = $params;
-    }
+    public function __construct(
+        private string $method,
+        private string $path,
+        private array $headers = [],
+        private ?string $body = null,
+        private array $params = []
+    ) {}
 
     public function getMethod(): string
     {
@@ -52,5 +45,4 @@ class Request implements RequestInterface
     {
         return $this->params;
     }
-
 }
