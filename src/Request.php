@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 use App\src\interfaces\RequestInterface;
@@ -11,7 +12,8 @@ class Request implements RequestInterface
         private array $headers = [],
         private ?string $body = null,
         private array $params = []
-    ) {}
+    ) {
+    }
 
     public function getMethod(): string
     {

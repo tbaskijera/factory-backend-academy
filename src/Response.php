@@ -13,7 +13,7 @@ class Response implements ResponseInterface
         $this->content = $content;
     }
 
-    function send(): string
+    public function send(): string
     {
         return $this->content;
     }
