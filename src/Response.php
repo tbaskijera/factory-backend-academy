@@ -2,10 +2,7 @@
 
 namespace App;
 
-interface ResponseInterface
-{
-    function send(): string;
-}
+use App\src\interfaces\ResponseInterface;
 
 class Response implements ResponseInterface
 {
