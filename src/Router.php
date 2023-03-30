@@ -2,7 +2,11 @@
 
 namespace App;
 
-class Router {
+use App\src\interfaces\ResponseInterface;
+use Exception;
+
+class Router
+{
     private static array $routes;
     private static array $validMethods = ["GET", "POST"]; # "PUT", "DELETE"
 
@@ -23,10 +27,9 @@ class Router {
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
         }
-
     }
 
-    public static function resolveRoute(Request $request): ?Response
+    public static function resolveRoute(Request $request): ?ResponseInterface
     {
         $method = $request->getMethod();
         $path = $request->getPath();
