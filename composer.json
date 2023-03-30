@@ -5,11 +5,10 @@
             "App\\": "src/"
         }
     },
-    "authors": [
-        {
-            "name": "Toni Baskijera",
-            "email": "tonibaskijera@gmail.com"
-        }
-    ],
-    "require": {}
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.15"
+    },
+    "scripts": {
+        "fix": "php vendor/bin/php-cs-fixer fix"
+    }
 }
