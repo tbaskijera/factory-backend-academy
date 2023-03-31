@@ -2,17 +2,19 @@
 
 namespace App;
 
-use App\src\interfaces\RequestInterface;
+
+use App\Interfaces\RequestInterface;
 
 class Request implements RequestInterface
 {
     public function __construct(
-        private string $method,
-        private string $path,
         private array $headers = [],
         private ?string $body = null,
         private array $params = []
+
     ) {
+        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->uri = $_SERVER['REQUEST_URI'];
     }
 
     public function getMethod(): string
@@ -22,7 +24,7 @@ class Request implements RequestInterface
 
     public function getPath(): string
     {
-        return $this->path;
+        return $this->uri;
     }
 
     public function getHeaders(): array

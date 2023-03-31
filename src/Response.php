@@ -2,7 +2,8 @@
 
 namespace App;
 
-use App\src\interfaces\ResponseInterface;
+
+use App\Interfaces\ResponseInterface;
 
 class Response implements ResponseInterface
 {
