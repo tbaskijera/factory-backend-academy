@@ -20,7 +20,7 @@ class Request implements RequestInterface
         return $this->method;
     }
 
-    public function getPath(): string
+    public function getUri(): string
     {
         return $this->uri;
     }
