@@ -2,7 +2,6 @@
 
 namespace App;
 
-
 use App\Interfaces\ResponseInterface;
 
 class Response implements ResponseInterface
