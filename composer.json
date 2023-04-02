@@ -9,6 +9,12 @@
         "friendsofphp/php-cs-fixer": "^3.15"
     },
     "scripts": {
-        "fix": "php vendor/bin/php-cs-fixer fix"
+        "fix": "php vendor/bin/php-cs-fixer fix",
+        "build": [
+            "sudo cp -r `pwd` /var/www/html",
+            "sudo systemctl restart apache2"
+        ],
+        "log": "cat /var/log/apache2/error.log"
+
     }
 }
