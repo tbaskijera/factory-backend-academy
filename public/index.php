@@ -1,11 +1,12 @@
 <?php
 
-require_once 'vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
+
 
 use App\Router;
 use App\Request;
 
-include('./src/routes.php');
+require('../src/routes.php');
 
 $request = new Request();
 $response = Router::resolveRoute($request);
