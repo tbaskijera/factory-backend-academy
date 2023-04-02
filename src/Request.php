@@ -9,7 +9,9 @@ class Request implements RequestInterface
     public function __construct(
         private array $headers = [],
         private ?string $body = null,
-        private array $params = []
+        private array $params = [],
+        private string $method = '',
+        private string $uri = ''
     ) {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->uri = $_SERVER['REQUEST_URI'];
@@ -38,5 +40,10 @@ class Request implements RequestInterface
     public function getParams(): array
     {
         return $this->params;
+    }
+
+    public function setParams(array $params): void
+    {
+        $this->params = $params;
     }
 }
