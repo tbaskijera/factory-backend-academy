@@ -3,12 +3,13 @@
 use App\Controllers\IndexController;
 use App\JsonResponse;
 use App\Router;
+use App\Request;
 use App\Response;
 use App\Interfaces\RequestInterface;
 use App\Interfaces\ResponseInterface;
 
-Router::addRoute('GET', '/index', [IndexController::class, 'indexAction']);
-Router::addRoute('GET', '/index/json', 'IndexController@indexJsonAction');
+Router::addRoute(Request::METHOD_GET, '/index', [IndexController::class, 'indexAction']);
+Router::addRoute(Request::METHOD_GET, '/index/json', 'IndexController@indexJsonAction');
 
 # Normal callbacks also work
 /*

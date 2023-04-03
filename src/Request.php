@@ -6,7 +6,11 @@ use App\Interfaces\RequestInterface;
 
 class Request implements RequestInterface
 {
+    public const METHOD_GET = 'GET';
+    public const METHOD_POST = 'POST';
+
     public function __construct(
+
         private array $headers = [],
         private ?string $body = null,
         private array $params = [],
@@ -15,6 +19,7 @@ class Request implements RequestInterface
     ) {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->uri = $_SERVER['REQUEST_URI'];
+
     }
 
     public function getMethod(): string
