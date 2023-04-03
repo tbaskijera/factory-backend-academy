@@ -8,13 +8,13 @@ use Exception;
 class Router
 {
     private static array $routes = [];
-    private static array $validMethods = ['GET', 'POST']; # 'PUT', 'DELETE'
+    private static array $validMethods = [Request::METHOD_GET, Request::METHOD_POST]; # 'PUT', 'DELETE'
 
     public static function addRoute($method, $url, $callback): void
     {
         try {
             if (!in_array($method, self::$validMethods)) {
-                throw new Exception('Invalid HTTP method: $method');
+                throw new Exception('Invalid HTTP method:' .$method);
             }
 
             // Parse the URL and extract parameter names (from Chat GPT)
@@ -67,12 +67,20 @@ class Router
         $method = $request->getMethod();
         $uri = $request->getUri();
 
+
+
         foreach (self::$routes as $route) {
             if ($route['method'] === $method) {
                 $pattern = '/^' . str_replace('/', '\/', $route['urlPattern']) . '$/';
                 if (preg_match($pattern, $uri, $matches)) {
                     $params = array_combine($route['params'], array_slice($matches, 1));
-                    $request->setParams($params);
+                    $queryParams = [];
+                    if ($pos = strpos($uri, '?')) {
+                        $query = substr($uri, $pos + 1);
+                        parse_str($query, $queryParams);
+                    }
+                    $request->setParams(array_merge($params, $queryParams));
+
 
                     $callback = $route['callback'];
                     return $callback($request);
