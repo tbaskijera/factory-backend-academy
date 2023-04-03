@@ -16,5 +16,8 @@
         ],
         "log": "cat /var/log/apache2/error.log"
 
+    },
+    "require": {
+        "twig/twig": "^3.0"
     }
 }

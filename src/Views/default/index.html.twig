@@ -1,0 +1,10 @@
+<ul>
+    {% for book in books %}
+        <li>
+            <strong>ID: </strong> {{ book.id}}<br>
+            <strong>Title:</strong> {{ book.title}}<br>
+            <strong>Author:</strong> {{ book.author }}<br>
+            <strong>Year:</strong> {{ book.year }}
+        </li>
+    {% endfor %}
+</ul>
