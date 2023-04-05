@@ -6,8 +6,6 @@ use PDO;
 use Exception;
 use Dotenv\Dotenv;
 
-require __DIR__.'/vendor/autoload.php';
-
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
@@ -29,7 +27,7 @@ class Connection
         }
     }
 
-    public static function getInstance()
+    public static function getInstance(): Connection
     {
         if (self::$instance == null) {
             self::$instance = new Connection();
@@ -37,7 +35,7 @@ class Connection
         return self::$instance;
     }
 
-    public function fetchAssoc()
+    public function fetchAssoc(string $query)
     {
     }
 
@@ -45,7 +43,7 @@ class Connection
     {
     }
 
-    public function insert($table, $object)
+    public function insert(string $table, array $object): void
     {
         if (!isset($object) || !is_array($object)) {
             return new Exception("Wrong format");
@@ -84,7 +82,7 @@ class Connection
     }
 
 
-    private function singleInsert($table, $object)
+    private function singleInsert(string $table, array $object): void
     {
         [$objectKeys, $objectValues] = [array_keys($object), array_values($object)];
 
@@ -96,14 +94,14 @@ class Connection
         $stmt = $this->connection->prepare($sql);
 
         foreach ($objectKeys as $i => $key) {
-            $stmt->bindValue(':' . $key, $objectValues[$i]);
+            $stmt->bindValue(":{$key}", $objectValues[$i]);
         }
 
         $stmt->execute();
     }
 
 
-    public function groupInsert($table, $objects)
+    public function groupInsert(string $table, array $objects): void
     {
         $objectKeys = array_keys($objects[0]);
 
