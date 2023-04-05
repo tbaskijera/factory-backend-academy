@@ -58,27 +58,26 @@ class Connection
         }
     }
 
-    public function update($table, $updateValues, $condition)
+    public function update(string $table, array $updateValues, array $condition): void
     {
         $updateKeys = array_keys($updateValues);
         $setClause = implode(', ', array_map(function ($key) {
-            return "{$key} = :{$key}";
+            return "{$key} = :update_{$key}";
         }, $updateKeys));
 
         $conditionKeys = array_keys($condition);
         $whereClause = implode(' AND ', array_map(function ($key) {
-            return "{$key} = :{$key}";
+            return "{$key} = :condition_{$key}";
         }, $conditionKeys));
-
         $sql = "UPDATE {$table} SET {$setClause} WHERE {$whereClause}";
         $stmt = $this->connection->prepare($sql);
 
         foreach ($updateValues as $key => $value) {
-            $stmt->bindValue(":{$key}", $value);
+            $stmt->bindValue(":update_{$key}", $value);
         }
 
         foreach ($condition as $key => $value) {
-            $stmt->bindValue(":{$key}", $value);
+            $stmt->bindValue(":condition_{$key}", $value);
         }
 
         $stmt->execute();
