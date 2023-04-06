@@ -6,7 +6,7 @@ use PDO;
 use Exception;
 use Dotenv\Dotenv;
 
-$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
 class Connection
@@ -35,18 +35,51 @@ class Connection
         return self::$instance;
     }
 
-    public function fetchAssoc(string $query)
+    public function fetchAssoc(string $query, array $values): ?array
     {
+        $statement = $this->connection->prepare($query);
+
+        if (Utils::is_associative_array($values)) {
+            foreach ($values as $key => $value) {
+                $statement->bindValue(":$key", $value);
+            }
+        } else {
+            foreach ($values as $i => $value) {
+                $statement->bindValue($i + 1, $value);
+            }
+        }
+
+        $statement->execute();
+
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return ($result !== false) ? $result : null;
     }
 
-    public function fetchAssocAll()
+    public function fetchAssocAll(string $query, array $values): array
     {
+        $statement = $this->connection->prepare($query);
+
+        if (Utils::is_associative_array($values)) {
+            foreach ($values as $key => $value) {
+                $statement->bindValue(":$key", $value);
+            }
+        } else {
+            $count = count($values);
+            for ($i = 0; $i < $count; $i++) {
+                $statement->bindValue($i + 1, $values[$i]);
+            }
+        }
+
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function insert(string $table, array $object): void
     {
         if (!isset($object) || !is_array($object)) {
-            return new Exception("Wrong format");
+            throw new Exception("Wrong format");
         }
 
         if (Utils::is_associative_array($object)) {
@@ -90,7 +123,6 @@ class Connection
         $placeholders = ':' . implode(', :', $objectKeys);
 
         $sql = "INSERT INTO $table ($columnNames) VALUES ($placeholders)";
-
         $stmt = $this->connection->prepare($sql);
 
         foreach ($objectKeys as $i => $key) {
