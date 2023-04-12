@@ -2,9 +2,9 @@
 
 namespace App;
 
-use App\Interfaces\ResponseInterface;
-use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+use App\Interfaces\ResponseInterface;
 
 class TwigResponse implements ResponseInterface
 {
@@ -19,9 +19,8 @@ class TwigResponse implements ResponseInterface
 
     public function send(): string
     {
-        # have to use relative path cause by default twig looks into "/var/www/html/factory-backend-academy/public/src/Views/"
-        # therefore, even using 'App/Views' is incorrect
-        $loader = new FilesystemLoader(['../src/Views/default', '../src/Views/error']);
+        $subdirs = glob('../src/Views/*', GLOB_ONLYDIR);
+        $loader = new FilesystemLoader($subdirs);
         $twig = new Environment($loader);
         $template = $twig->load($this->view);
         return $template->render($this->content);
