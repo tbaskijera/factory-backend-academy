@@ -39,7 +39,7 @@ class Connection
     {
         $statement = $this->connection->prepare($query);
 
-        if (Utils::is_associative_array($values)) {
+        if (Utils::isAssociativeArray($values)) {
             foreach ($values as $key => $value) {
                 $statement->bindValue(":$key", $value);
             }
@@ -60,7 +60,7 @@ class Connection
     {
         $statement = $this->connection->prepare($query);
 
-        if (Utils::is_associative_array($values)) {
+        if (Utils::isAssociativeArray($values)) {
             foreach ($values as $key => $value) {
                 $statement->bindValue(":$key", $value);
             }
@@ -82,7 +82,7 @@ class Connection
             throw new Exception("Wrong format");
         }
 
-        if (Utils::is_associative_array($object)) {
+        if (Utils::isAssociativeArray($object)) {
             $this->singleInsert($table, $object);
         } else {
             $this->groupInsert($table, $object);
@@ -114,6 +114,10 @@ class Connection
         $stmt->execute();
     }
 
+    public function getLastInsertId(): int
+    {
+        return (int) $this->connection->lastInsertId();
+    }
 
     private function singleInsert(string $table, array $object): void
     {
@@ -133,7 +137,7 @@ class Connection
     }
 
 
-    public function groupInsert(string $table, array $objects): void
+    private function groupInsert(string $table, array $objects): void
     {
         $objectKeys = array_keys($objects[0]);
 
