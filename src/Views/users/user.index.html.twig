@@ -1,0 +1,10 @@
+<ul>
+    {% for user in users %}
+        <li>
+            <strong>Id: </strong> {{ user.id}}<br>
+            <strong>First Name:</strong> {{ user.firstName }}<br>
+            <strong>Last Name:</strong> {{ user.lastName }}<br>
+            <strong>Email:</strong> {{ user.email }}
+        </li>
+    {% endfor %}
+</ul>
