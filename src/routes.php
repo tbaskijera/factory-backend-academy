@@ -1,33 +1,19 @@
 <?php
 
-use App\Controllers\IndexController;
-use App\JsonResponse;
 use App\Router;
 use App\Request;
-use App\Response;
-use App\Interfaces\RequestInterface;
-use App\Interfaces\ResponseInterface;
+use App\Controllers\IndexController;
 
+# GENERIC
 Router::addRoute(Request::METHOD_GET, '/index', [IndexController::class, 'indexAction']);
 Router::addRoute(Request::METHOD_GET, '/index/json', 'IndexController@indexJsonAction');
 
-# Normal callbacks also work
-/*
-require('books.php');
-Router::addRoute('GET', '/index', function (RequestInterface $request): ResponseInterface {
-    return new Response(var_dump(getBooks()));
-});
+# HTML
+Router::addRoute(Request::METHOD_GET, '/users/index', 'UserController@index');
+Router::addRoute(Request::METHOD_GET, '/users/show/{id}', 'UserController@show');
+Router::addRoute(Request::METHOD_GET, '/users/create', 'UserController@create');
+Router::addRoute(Request::METHOD_GET, '/users/edit/{id}', 'UserController@edit');
 
-Router::addRoute('GET', '/index/{productId}', function (RequestInterface $request): ResponseInterface {
-    $books = getBooks();
-    foreach ($books as $book) {
-        if ($book['id'] == $request->getParams()['productId']) {
-            return new Response(var_dump($book));
-        }
-    }
-    return new Response("Not found");
-});
-Router::addRoute('GET', '/index/{brand}/{model}/{id}', function (RequestInterface $request): JsonResponse {
-    return new JsonResponse($request->getParams());
-});
-*/
+# UTILITY
+Router::addRoute(Request::METHOD_POST, '/users/store', 'UserController@store');
+Router::addRoute(Request::METHOD_POST, '/users/update/{id}', 'UserController@update');
