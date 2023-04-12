@@ -20,4 +20,10 @@ class User extends Model
         $this->setUpdatedAt();
         return parent::save();
     }
+
+    public function softDelete(): void
+    {
+        $this->setDeletedAt();
+        return parent::softDelete();
+    }
 }

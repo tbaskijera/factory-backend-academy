@@ -40,6 +40,12 @@ abstract class Model
         static::$connection->update(static::$tableName, $this->properties, [static::$primaryKeyName => $id]);
     }
 
+    public function softDelete(): void
+    {
+        $id = $this->{static::$primaryKeyName};
+        static::$connection->update(static::$tableName, ['deleted_at' => $this->properties['deleted_at']], [static::$primaryKeyName => $id]);
+    }
+
     public static function find(int $lookupID): object
     {
         $tableName = static::$tableName;

@@ -8,6 +8,11 @@ trait Timestamp
         $this->updated_at = $this->getTimestamp();
     }
 
+    public function setDeletedAt(): void
+    {
+        $this->deleted_at = $this->getTimestamp();
+    }
+
     public function setUpdatedAt(): void
     {
         $this->updated_at = $this->getTimestamp();
