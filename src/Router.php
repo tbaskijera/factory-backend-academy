@@ -2,8 +2,8 @@
 
 namespace App;
 
-use App\Interfaces\ResponseInterface;
 use Exception;
+use App\Interfaces\ResponseInterface;
 
 class Router
 {
@@ -67,8 +67,6 @@ class Router
         $method = $request->getMethod();
         $uri = $request->getUri();
 
-
-
         foreach (self::$routes as $route) {
             if ($route['method'] === $method) {
                 $pattern = '/^' . str_replace('/', '\/', $route['urlPattern']) . '$/';
@@ -79,8 +77,14 @@ class Router
                         $query = substr($uri, $pos + 1);
                         parse_str($query, $queryParams);
                     }
-                    $request->setParams(array_merge($params, $queryParams));
 
+                    // Parse the form data in the request body
+                    parse_str($request->getBody(), $formData);
+
+                    // Merge the query string parameters and form data into the params array
+                    $params = array_merge($params, $queryParams, $formData);
+
+                    $request->setParams($params);
 
                     $callback = $route['callback'];
                     return $callback($request);
